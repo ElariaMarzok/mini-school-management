@@ -1,16 +1,49 @@
-# React + Vite
+# Mini School Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Full-stack school management system built with the MERN stack.
 
-Currently, two official plugins are available:
+## Tech Stack
+- Backend: Node.js, Express.js, MongoDB, Mongoose, JWT, bcrypt
+- Frontend: React (Vite), Tailwind CSS, React Router, Axios, Recharts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Project Structure
 
-## React Compiler
+school-management/
+├── server/ # Express REST API
+└── client/ # React application
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the Oxlint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### 1. Backend
+```bash
+cd server
+npm install
+cp .env.example .env   # fill in MONGO_URI, JWT_SECRET, ADMIN_USERNAME, ADMIN_PASSWORD
+npm run seed            # creates the first Admin user
+npm run dev
+```
+Runs on `http://localhost:5000`.
+
+### 2. Frontend
+```bash
+cd client
+npm install
+cp .env.example .env    # VITE_API_URL=http://localhost:5000/api
+npm run dev
+```
+Runs on `http://localhost:5173`.
+
+## Roles
+- **Admin**: full access to students, grades/classes, attendance and dashboard.
+- **Teacher**: views and records attendance only for their assigned class.
+
+## Key Features
+- JWT authentication with role-based route protection (backend middleware + frontend ProtectedRoute)
+- Student CRUD with search (name/code/phone) and grade/class filters, soft delete (Deactivate)
+- Grades & Classes management with live student counts and bulk student assignment
+- Daily attendance sheet (upsert-based save, editable) and per-student attendance history
+- Admin dashboard with summary cards and a 7-day attendance bar chart; lighter Teacher summary view
+
+## API Overview
+See `server/src/routes/*.js` for the full list of endpoints (`/api/auth`, `/api/grades`, `/api/classes`, `/api/students`, `/api/attendance`, `/api/dashboard`).
